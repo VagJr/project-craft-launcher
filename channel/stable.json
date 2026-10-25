@@ -1,17 +1,17 @@
 {
   "schema": 1,
-  "version": "0.9.2-alpha",
+  "version": "0.9.3-alpha",
   "distributionRevision": 1,
   "minecraft": "1.20.1",
   "forge": "47.3.22",
-  "serverAuth": "online",
-  "releasedAt": "2026-10-25T17:02:39.571Z",
-  "title": "Uma nova operação está pronta.",
-  "summary": "Atualização aprovada do Project Craft. Confira as notas completas na comunidade.",
+  "serverAuth": "hybrid",
+  "releasedAt": "2026-10-25T19:20:10.409Z",
+  "title": "Seu operador. Sua próxima missão.",
+  "summary": "Entrada por nick protegida, economia em CPC, lojas físicas e contadores de missão restaurados.",
   "pack": {
-    "url": "https://github.com/VagJr/project-craft-launcher/releases/download/pack-0.9.2-alpha/ProjectCraft-Client-0.9.2-alpha.mrpack",
-    "sha256": "e6f25d685bfe61e6d77ead253654ded34e87db80d6dc6db5317ada1cc16f556c",
-    "size": 100579740
+    "url": "https://github.com/VagJr/project-craft-launcher/releases/download/pack-0.9.3-alpha/ProjectCraft-Client-0.9.3-alpha.mrpack",
+    "sha256": "a1715be2bdd6a4b1929536ff41b83126ab42ce0604481c74441af0828a188552",
+    "size": 100603395
   },
   "java": {
     "url": "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1%2B1/OpenJDK17U-jdk_x64_windows_hotspot_17.0.20.1_1.zip",
