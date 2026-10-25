@@ -1,0 +1,3 @@
+channel/*.json -text
+channel/*.sig -text
+release-public-key.pem text eol=lf

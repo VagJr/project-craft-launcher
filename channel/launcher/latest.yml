@@ -1,0 +1,8 @@
+version: 1.0.0
+files:
+  - url: https://github.com/VagJr/project-craft-launcher/releases/download/v1.0.0/ProjectCraft-Setup-1.0.0.exe
+    sha512: 6wYmfIBgtGZKocZ3ewRhKUVlCii6KUgujtEDXGIfgdZm2wS4zLOPJ0Etqo6IruSjQktzv3HOzUnn3MOJ83pd6w==
+    size: 126709029
+path: https://github.com/VagJr/project-craft-launcher/releases/download/v1.0.0/ProjectCraft-Setup-1.0.0.exe
+sha512: 6wYmfIBgtGZKocZ3ewRhKUVlCii6KUgujtEDXGIfgdZm2wS4zLOPJ0Etqo6IruSjQktzv3HOzUnn3MOJ83pd6w==
+releaseDate: '2026-10-25T16:11:48.890Z'
