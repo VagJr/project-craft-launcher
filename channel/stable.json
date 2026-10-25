@@ -26,17 +26,17 @@
   "launcher": {
     "enabled": true,
     "status": "published",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "format": "msi",
     "publisherSigned": false,
     "notice": "Sem certificado de publicador. O Windows pode mostrar avisos de aplicativo desconhecido.",
-    "url": "https://github.com/VagJr/project-craft-launcher/releases/download/v1.1.0/ProjectCraft-Setup-1.1.0-x64.msi",
-    "sha256": "c31050f4c210a1df1701fa1bcd6de5deb99bae154ab025c1b7c5742cba06375d",
+    "url": "https://github.com/VagJr/project-craft-launcher/releases/download/v1.1.1/ProjectCraft-Setup-1.1.1-x64.msi",
+    "sha256": "a7c6b5f7f8d17d1deb96265e002f5c24848fe19badaa40103bc5ba89354e07e1",
     "size": 131809280,
     "zip": {
-      "url": "https://github.com/VagJr/project-craft-launcher/releases/download/v1.1.0/ProjectCraft-1.1.0-x64.zip",
-      "sha256": "a3d4b83145cc8d583fe422f23c8f5cc74ea1e1a4bd79cf50fa45f8ad94e31946",
-      "size": 158680956
+      "url": "https://github.com/VagJr/project-craft-launcher/releases/download/v1.1.1/ProjectCraft-1.1.1-x64.zip",
+      "sha256": "3f1984a867d52066399986803d3460330d26574ef4abdaecb17848415672a1e9",
+      "size": 158680977
     }
   }
 }
