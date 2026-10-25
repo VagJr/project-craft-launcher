@@ -1,6 +1,6 @@
 {
   "name": "project-craft-launcher",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Launcher oficial do Project Craft",
   "author": "Project Craft",
   "license": "MIT",
@@ -9,14 +9,15 @@
   "scripts": {
     "start": "electron .",
     "test": "node --test test/*.test.cjs",
-    "build": "electron-builder --win nsis portable --publish never",
+    "build": "node scripts/build-distribution.cjs",
+    "build:clean": "node scripts/clean-build.cjs",
+    "release:launcher": "node scripts/publish-launcher.cjs",
     "release": "node scripts/publish.cjs",
     "watch": "node scripts/watch.cjs",
     "connection": "node scripts/connection.cjs"
   },
   "dependencies": {
     "adm-zip": "0.6.1",
-    "electron-updater": "6.8.11",
     "minecraft-launcher-core": "3.18.2",
     "msmc": "5.0.5"
   },
@@ -41,13 +42,13 @@
     "win": {
       "target": [
         {
-          "target": "nsis",
+          "target": "msi",
           "arch": [
             "x64"
           ]
         },
         {
-          "target": "portable",
+          "target": "zip",
           "arch": [
             "x64"
           ]
@@ -57,17 +58,13 @@
       "artifactName": "ProjectCraft-${version}-${arch}.${ext}",
       "signAndEditExecutable": true
     },
-    "nsis": {
-      "artifactName": "ProjectCraft-Setup-${version}.exe",
+    "msi": {
+      "artifactName": "ProjectCraft-Setup-${version}-x64.msi",
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
       "perMachine": false,
       "createDesktopShortcut": true,
       "shortcutName": "Project Craft",
-      "deleteAppDataOnUninstall": false
-    },
-    "portable": {
-      "artifactName": "ProjectCraft-Portable-${version}.exe"
+      "runAfterFinish": false
     },
     "publish": {
       "provider": "github",

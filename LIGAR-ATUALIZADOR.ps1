@@ -1,6 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $launcherDirectory = $PSScriptRoot
 $stateDirectory = Join-Path $launcherDirectory '.local'
+if (Test-Path -LiteralPath (Join-Path $stateDirectory 'distribution-suspended.json')) { Write-Output 'Atualizador suspenso enquanto o alerta do antivírus é analisado.'; exit 0 }
 New-Item -ItemType Directory -Path $stateDirectory -Force | Out-Null
 $pidFile = Join-Path $stateDirectory 'watch.pid'
 if (Test-Path -LiteralPath $pidFile) {

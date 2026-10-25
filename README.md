@@ -8,7 +8,7 @@ Discord: https://discord.gg/vZYuuR6KUG
 
 ## Jogadores
 
-Instale o executável ou abra a edição portátil. Escolha a identificação, ajuste a memória e clique em Jogar. Arquivos do Minecraft são obtidos em tempo de instalação; o instalador não contém o jogo da Mojang. O pacote é separado das outras instalações em `%APPDATA%/ProjectCraft/game`.
+A distribuição anterior foi suspensa após um alerta do Windows Defender no instalador 1.0.1. A versão 1.1.0 usa MSI e ZIP e foi autorizada pelo responsável para publicação sem certificado de publicador, após verificações locais limpas. Escolha a identificação, ajuste a memória e clique em Jogar. Arquivos do Minecraft são obtidos em tempo de instalação; o instalador não contém o jogo da Mojang. O pacote é separado das outras instalações em `%APPDATA%/ProjectCraft/game`.
 
 O modo Microsoft abre a janela de autenticação do provedor e armazena a sessão com criptografia do Windows quando disponível. O modo por nick abre o cliente com identidade local para servidores compatíveis. **O servidor principal ainda está em online-mode=true**: o modo por nick não concede acesso ao principal. A liberação exige uma migração separada de autenticação/UUIDs, com proteção das contas e dos personagens existentes. Não anuncie suporte completo ao principal por nick enquanto essa migração não estiver concluída.
 
@@ -32,8 +32,18 @@ Não há monitoramento remoto quando este computador estiver desligado. Publica�
 
 Node 22 ou superior. `npm ci`, `npm test`, `npm start`, `npm run build`.
 
-O instalador NSIS e a edição portátil são gerados em build/. Não há certificado comercial de assinatura do executável configurado. A assinatura Ed25519 do canal valida as versões do pacote e é distinta da assinatura de publicador do Windows.
+O instalador MSI padrão do Windows e o ZIP são gerados separadamente. `npm run build:clean` usa uma pasta nova, `npm ci --ignore-scripts`, auditoria de procedência npm e checksum oficial do Electron; saídas em build/1.1.0, com hashes e proveniência. Não há certificado de publicador Windows configurado. A assinatura Ed25519 do canal valida as versões do pacote e é distinta da assinatura de publicador do Windows.
 
 Dependências antigas do Minecraft Launcher Core foram substituídas por adm-zip 0.6.1, @cypress/request e uuid 11.1.1 através de overrides. A auditoria de dependências reportou zero vulnerabilidades após as correções. Mantenha o package-lock e teste a instalação/inicialização a cada atualização da base.
 
 Licenças próprias de Minecraft, mods, fontes e artes continuam aplicáveis. A licença MIT da fonte do launcher não transfere direitos sobre esses componentes.
+
+## Segurança da distribuição
+
+Os downloads 1.0.0 e 1.0.1 foram retirados. O alerta Program:Win32/Contebrew.A!ml foi reproduzido no instalador 1.0.1; não existe confirmação de falso positivo. Não restaure nem libere a amostra bloqueada.
+
+A atualização do launcher usa o mesmo manifesto Ed25519 verificado do pacote, exige MSI da release oficial, tamanho e SHA-256 e confere o arquivo novamente antes da abertura. A instalação é apresentada pelo Windows após confirmação do usuário. O pacote do jogo continua sendo preparado automaticamente.
+
+`npm run release:launcher` cria somente rascunho. A opção `-- --publish` exige relatório de `scripts/inspect-release.ps1` com verificações locais limpas, MSI e aplicativo com assinatura Authenticode válida e hashes atuais. Uma publicação manual sem certificado, expressamente autorizada, usa adicionalmente `--allow-unsigned` e continua exigindo verificações locais limpas e hashes idênticos. Uma verificação local limpa não garante a reputação do SmartScreen ou o resultado em todos os antivírus. A assinatura Ed25519 do canal não identifica o publicador perante o Windows.
+
+Para verificar a compilação no Defender, use Windows PowerShell 5.1: `scripts/inspect-release.ps1 -ReleaseDir build/1.1.0 -OutputDir .local/security`. O script faz varredura sem alterar proteções ou restaurar arquivos em quarentena.
