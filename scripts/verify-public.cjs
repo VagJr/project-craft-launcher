@@ -7,7 +7,7 @@ const {verifySigned} = require('../src/core/safe-files.cjs');
 (async () => {
   const base = 'https://raw.githubusercontent.com/VagJr/project-craft-launcher/main/channel';
   const [envelope, key, html] = await Promise.all([
-    text(base + '/stable.signed.json').then(JSON.parse),
+    text(base + '/stable.signed.json?t=' + Date.now()).then(JSON.parse),
     fs.readFile(path.join(ROOT, 'release-public-key.pem'), 'utf8'),
     text('https://project-craft-fps.vercel.app')
   ]);
