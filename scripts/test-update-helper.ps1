@@ -2,7 +2,7 @@
 $ErrorActionPreference='Stop'
 $root=Split-Path -Parent $PSScriptRoot
 . (Join-Path $root 'src\update-helper.ps1')
-$testRoot=Join-Path $root ('.local\qa-updater\'+[guid]::NewGuid().ToString());$null=New-Item -ItemType Directory -Path $testRoot -Force
+$testRoot=Join-Path $root ('.local\qa-updater\Operação Ágil '+[guid]::NewGuid().ToString());$null=New-Item -ItemType Directory -Path $testRoot -Force
 $script:checks=0;$script:restarts=0;$script:realVersion=(Get-Command Get-PCVersion).ScriptBlock
 function Check($Condition,[string]$Label){$script:checks++;if(!$Condition){throw "Update helper test failed: $Label"}}
 function Get-PCVersion([string]$Executable){return [IO.File]::ReadAllText($Executable).Trim()}

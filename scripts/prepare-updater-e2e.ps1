@@ -1,5 +1,5 @@
 ﻿$ErrorActionPreference='Stop'
-$root=Join-Path (Split-Path -Parent $PSScriptRoot) ('.local\qa-updater\e2e-'+[guid]::NewGuid().ToString())
+$root=Join-Path (Split-Path -Parent $PSScriptRoot) ('.local\qa-updater\Operação Ágil e2e-'+[guid]::NewGuid().ToString())
 $app=Join-Path $root 'app';$next=Join-Path $root 'next';$data=Join-Path $root 'ProjectCraft'
 $null=New-Item -ItemType Directory -Path (Join-Path $app 'resources'),(Join-Path $next 'resources'),$data -Force
 foreach($version in @('1.1.1','1.2.0')) {

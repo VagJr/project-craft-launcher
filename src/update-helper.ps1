@@ -116,7 +116,7 @@ function Install-PCZip($Plan, [string[]]$Files) {
     foreach ($file in $Files) { $all.Add($file) }
     $manifest = Join-Path $root $marker
     if (Test-Path -LiteralPath $manifest) {
-        foreach ($file in @((Get-Content -LiteralPath $manifest -Raw | ConvertFrom-Json).files)) { $file = Get-PCRelative $file; if (!$all.Contains($file)) { $all.Add($file) } }
+        foreach ($file in @((Get-Content -LiteralPath $manifest -Raw -Encoding UTF8 | ConvertFrom-Json).files)) { $file = Get-PCRelative $file; if (!$all.Contains($file)) { $all.Add($file) } }
     }
     Write-PCJson (Join-Path $stage $marker) @{version=$Plan.version;files=$Files}; $all.Add($marker)
     $changed = New-Object 'System.Collections.Generic.List[object]'
@@ -162,7 +162,7 @@ function Start-PCLauncher([string]$Executable) { if (Test-Path -LiteralPath $Exe
 function Invoke-PCUpdate([string]$File) {
     $plan=$null; $package=$null; $parentExited=$false; $jobVerified=$false
     try {
-        $plan=Get-Content -LiteralPath $File -Raw | ConvertFrom-Json
+        $plan=Get-Content -LiteralPath $File -Raw -Encoding UTF8 | ConvertFrom-Json
         if ($plan.schema -ne 1 -or $plan.version -notmatch '^\d+\.\d+\.\d+$' -or $plan.format -notin @('msi','zip') -or $plan.sha256 -notmatch '^[a-f0-9]{64}$' -or $plan.size -le 0 -or $plan.size -gt 536870912 -or $plan.parentId -le 0) { throw 'Plano de atualização inválido.' }
         $job=[IO.Path]::GetFullPath($plan.job); $updates=[IO.Path]::GetDirectoryName($job)
         if ([IO.Path]::GetFileName($updates) -ne 'updates' -or [IO.Path]::GetFileName($job) -notmatch '^[a-f0-9-]{36}$' -or [IO.Path]::GetFullPath($File) -ne (Join-Path $job 'plan.json')) { throw 'Pasta do atualizador inválida.' }
