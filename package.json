@@ -1,0 +1,83 @@
+{
+  "name": "project-craft-launcher",
+  "version": "1.0.0",
+  "description": "Launcher oficial do Project Craft",
+  "author": "Project Craft",
+  "license": "MIT",
+  "private": true,
+  "main": "src/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs",
+    "build": "electron-builder --win nsis portable --publish never",
+    "release": "node scripts/publish.cjs",
+    "watch": "node scripts/watch.cjs",
+    "connection": "node scripts/connection.cjs"
+  },
+  "dependencies": {
+    "adm-zip": "0.6.1",
+    "electron-updater": "6.8.11",
+    "minecraft-launcher-core": "3.18.2",
+    "msmc": "5.0.5"
+  },
+  "devDependencies": {
+    "electron": "45.0.0",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "br.projectcraft.launcher",
+    "productName": "Project Craft",
+    "copyright": "Copyright \u00c2\u00a9 2026 Project Craft",
+    "asar": true,
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json",
+      "release-public-key.pem"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "ProjectCraft-${version}-${arch}.${ext}",
+      "signAndEditExecutable": true
+    },
+    "nsis": {
+      "artifactName": "ProjectCraft-Setup-${version}.exe",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "shortcutName": "Project Craft",
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "ProjectCraft-Portable-${version}.exe"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "VagJr",
+      "repo": "project-craft-launcher"
+    }
+  },
+  "overrides": {
+    "adm-zip": "0.6.1",
+    "request": "npm:@cypress/request@4.0.1",
+    "uuid": "11.1.1"
+  }
+}
