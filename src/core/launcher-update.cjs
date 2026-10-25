@@ -16,7 +16,7 @@ function newer(candidate, current) {
   return false;
 }
 
-function approvedUpdate(manifest, current) {
+function approvedUpdate(manifest, current, format = 'msi') {
   const update = manifest.launcher;
   if (update?.enabled !== true || !newer(update.version, current)) return null;
   const expected = `https://github.com/VagJr/project-craft-launcher/releases/download/v${update.version}/ProjectCraft-Setup-${update.version}-x64.msi`;
@@ -25,14 +25,24 @@ function approvedUpdate(manifest, current) {
       !Number.isSafeInteger(update.size) || update.size <= 0 || update.size > 512 * 1024 ** 2) {
     throw new Error('A atualização do launcher não tem os dados de verificação necessários.');
   }
+  if (format === 'zip') {
+    const zip = update.zip;
+    const expectedZip = `https://github.com/VagJr/project-craft-launcher/releases/download/v${update.version}/ProjectCraft-${update.version}-x64.zip`;
+    if (zip?.url !== expectedZip || !/^[a-f0-9]{64}$/.test(zip.sha256) ||
+        !Number.isSafeInteger(zip.size) || zip.size <= 0 || zip.size > 512 * 1024 ** 2) {
+      throw new Error('A atualização portátil não tem os dados de verificação necessários.');
+    }
+    return {...update, ...zip, format: 'zip'};
+  }
+  if (format !== 'msi') throw new Error('Formato de atualização inválido.');
   return update;
 }
 
-async function downloadUpdate(manifest, current, dataDir) {
-  const update = approvedUpdate(manifest, current);
+async function downloadUpdate(manifest, current, dataDir, {format = 'msi', progress} = {}) {
+  const update = approvedUpdate(manifest, current, format);
   if (!update) return null;
-  const file = path.join(dataDir, 'updates', `${update.sha256}.msi`);
-  await download(update.url, file, {hash: update.sha256, size: update.size, maxSize: 512 * 1024 ** 2});
+  const file = path.join(dataDir, 'updates', `${update.sha256}.${format}`);
+  await download(update.url, file, {hash: update.sha256, size: update.size, maxSize: 512 * 1024 ** 2, progress});
   return {...update, file};
 }
 

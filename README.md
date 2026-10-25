@@ -8,9 +8,9 @@ Discord: https://discord.gg/vZYuuR6KUG
 
 ## Jogadores
 
-A distribuição anterior foi suspensa após um alerta do Windows Defender no instalador 1.0.1. A versão 1.1.1 usa MSI e ZIP e foi autorizada pelo responsável para publicação sem certificado de publicador, após verificações locais limpas. Escolha a identificação, ajuste a memória e clique em Jogar. Arquivos do Minecraft são obtidos em tempo de instalação; o instalador não contém o jogo da Mojang. O pacote é separado das outras instalações em `%APPDATA%/ProjectCraft/game`.
+A distribuição anterior foi suspensa após um alerta do Windows Defender no instalador 1.0.1. A versão 1.2.0 usa MSI e ZIP e foi autorizada pelo responsável para publicação sem certificado de publicador, após verificações locais limpas. Escolha a identificação, ajuste a memória e clique em Jogar. Arquivos do Minecraft são obtidos em tempo de instalação; o instalador não contém o jogo da Mojang. O pacote é separado das outras instalações em `%APPDATA%/ProjectCraft/game`.
 
-O modo Microsoft abre a janela de autenticação do provedor, renova a sessão antes de jogar e guarda o token rotacionado com criptografia do Windows quando disponível. O pacote 0.9.3 habilita contas locais no principal: selecione Entrar por nick, use sempre o mesmo nome e cadastre sua senha na tela do jogo antes da seleção dos três personagens. Nomes Microsoft existentes continuam reservados e preservam seus UUIDs. A whitelist permanece ativa. O launcher 1.1.1 sempre abre o menu inicial; selecione INICIAR JOGO para conectar.
+O modo Microsoft abre a janela de autenticação do provedor, renova a sessão antes de jogar e guarda o token rotacionado com criptografia do Windows quando disponível. O pacote 0.9.3 habilita contas locais no principal: selecione Entrar por nick, use sempre o mesmo nome e cadastre sua senha na tela do jogo antes da seleção dos três personagens. Nomes Microsoft existentes continuam reservados e preservam seus UUIDs. A whitelist permanece ativa. O launcher 1.2.0 sempre abre o menu inicial; selecione INICIAR JOGO para conectar.
 
 O launcher consulta o canal de versão ao preparar/jogar, valida assinatura Ed25519 e hashes, baixa arquivos faltantes e substitui mods gerenciados antigos. Opções pessoais selecionadas são preservadas. Backups dos arquivos substituídos ficam em `.project-craft-backups` na instância. Mods manuais não gerenciados permanecem. Cada release usa versões fechadas e aprovadas; não atualiza cada mod para o mais recente individualmente. O cliente precisa ser encerrado para atualizar.
 
@@ -32,7 +32,7 @@ Não há monitoramento remoto quando este computador estiver desligado. Publica�
 
 Node 22 ou superior. `npm ci`, `npm test`, `npm start`, `npm run build`.
 
-O instalador MSI padrão do Windows e o ZIP são gerados separadamente. `npm run build:clean` usa uma pasta nova, `npm ci --ignore-scripts`, auditoria de procedência npm e checksum oficial do Electron; saídas em build/1.1.1, com hashes e proveniência. Não há certificado de publicador Windows configurado. A assinatura Ed25519 do canal valida as versões do pacote e é distinta da assinatura de publicador do Windows.
+O instalador MSI padrão do Windows e o ZIP são gerados separadamente. `npm run build:clean` usa uma pasta nova, `npm ci --ignore-scripts`, auditoria de procedência npm e checksum oficial do Electron; saídas em build/1.2.0, com hashes e proveniência. Não há certificado de publicador Windows configurado. A assinatura Ed25519 do canal valida as versões do pacote e é distinta da assinatura de publicador do Windows.
 
 Dependências antigas do Minecraft Launcher Core foram substituídas por adm-zip 0.6.1, @cypress/request e uuid 11.1.1 através de overrides. A auditoria de dependências reportou zero vulnerabilidades após as correções. Mantenha o package-lock e teste a instalação/inicialização a cada atualização da base.
 
@@ -42,8 +42,14 @@ Licenças próprias de Minecraft, mods, fontes e artes continuam aplicáveis. A 
 
 Os downloads 1.0.0 e 1.0.1 foram retirados. O alerta Program:Win32/Contebrew.A!ml foi reproduzido no instalador 1.0.1; não existe confirmação de falso positivo. Não restaure nem libere a amostra bloqueada.
 
-A atualização do launcher usa o mesmo manifesto Ed25519 verificado do pacote, exige MSI da release oficial, tamanho e SHA-256 e confere o arquivo novamente antes da abertura. A instalação é apresentada pelo Windows após confirmação do usuário. O pacote do jogo continua sendo preparado automaticamente.
+A partir de 1.2.0, o launcher se atualiza automaticamente. Ele consulta o canal cinco segundos após abrir, a cada dez minutos e antes de jogar. O download ocorre em segundo plano. A aplicação aguarda o jogo, a preparação e a edição das configurações terminarem; o launcher encerra, instala a versão aprovada e reabre sozinho. Não há botão obrigatório de instalação. As versões 1.1.x precisam de uma única atualização para 1.2.0 para receber esse comportamento.
+
+A atualização usa o manifesto Ed25519 já verificado, endereços oficiais, tamanho e SHA-256. O canal é consultado novamente antes da aplicação, para impedir instalar uma versão retirada. O helper Windows confere o arquivo novamente, mantém o pacote bloqueado contra alteração e espera o processo antigo encerrar. Não encerra o Minecraft nem reinicia o Windows.
+
+Na instalação MSI, usa Windows Installer em modo silencioso, preservando a pasta de instalação. Na edição portátil ZIP, prepara os arquivos em pasta separada, preserva arquivos pessoais não gerenciados, mantém backup dos arquivos substituídos e restaura em caso de falha. Preferências, contas e jogo ficam fora dos arquivos trocados. Falhas deixam a versão atual disponível e suspendem tentativas automáticas por uma hora, evitando ciclos de reinicialização. O Windows ou políticas da máquina ainda podem exigir autorização/bloquear a instalação; proteções não são desativadas.
+
+Referência do fluxo MSI: [opções oficiais do Windows Installer](https://learn.microsoft.com/en-us/windows/win32/msi/standard-installer-command-line-options). O helper é necessário porque o [atualizador integrado do Electron](https://www.electronjs.org/docs/latest/api/auto-updater/) não cobre esta distribuição MSI/ZIP. O pacote de mods continua sendo atualizado ao preparar/jogar.
 
 `npm run release:launcher` cria somente rascunho. A opção `-- --publish` exige relatório de `scripts/inspect-release.ps1` com verificações locais limpas, MSI e aplicativo com assinatura Authenticode válida e hashes atuais. Uma publicação manual sem certificado, expressamente autorizada, usa adicionalmente `--allow-unsigned` e continua exigindo verificações locais limpas e hashes idênticos. Uma verificação local limpa não garante a reputação do SmartScreen ou o resultado em todos os antivírus. A assinatura Ed25519 do canal não identifica o publicador perante o Windows.
 
-Para verificar a compilação no Defender, use Windows PowerShell 5.1: `scripts/inspect-release.ps1 -ReleaseDir build/1.1.1 -OutputDir .local/security`. O script faz varredura sem alterar proteções ou restaurar arquivos em quarentena.
+Para verificar a compilação no Defender, use Windows PowerShell 5.1: `scripts/inspect-release.ps1 -ReleaseDir build/1.2.0 -OutputDir .local/security`. O script faz varredura sem alterar proteções ou restaurar arquivos em quarentena.

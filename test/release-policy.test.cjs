@@ -15,6 +15,8 @@ test('publicação recusa assinatura ausente, detecção e artefato alterado ap�
   await fs.mkdir(reportDir, {recursive: true});
   const file = 'setup.msi';
   await fs.writeFile(path.join(dir, file), 'candidate');
+  await fs.writeFile(path.join(root, 'source.cjs'), 'source');
+  await fs.writeFile(path.join(dir, 'BUILD-PROVENANCE.json'), JSON.stringify({version:'1.1.0',source:[{file:'source.cjs',sha256:crypto.createHash('sha256').update('source').digest('hex')}]}));
   const report = {version: '1.1.0', publicReady: false, localScanPassed: true,
     signatures: [{status: 'NotSigned'}], files: [],
     scans: [{file, clean: true, sha256: crypto.createHash('sha256').update('candidate').digest('hex')}]};
@@ -31,6 +33,9 @@ test('publicação recusa assinatura ausente, detecção e artefato alterado ap�
   report.localScanPassed = true;
   await save();
   await assertPublicReady(root, '1.1.0');
+  await fs.writeFile(path.join(root, 'source.cjs'), 'changed');
+  await assert.rejects(assertPublicReady(root, '1.1.0'), /fonte mudou/);
+  await fs.writeFile(path.join(root, 'source.cjs'), 'source');
   await fs.writeFile(path.join(dir, file), 'tampered');
   await assert.rejects(assertPublicReady(root, '1.1.0'), /verificação/);
 });
