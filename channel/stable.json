@@ -25,6 +25,9 @@
   "discord": "https://discord.gg/vZYuuR6KUG",
   "launcher": {
     "version": "1.0.1",
-    "url": "https://github.com/VagJr/project-craft-launcher/releases/download/v1.0.1/ProjectCraft-Setup-1.0.1.exe"
+    "url": "https://github.com/VagJr/project-craft-launcher/releases/download/v1.0.1/ProjectCraft-Setup-1.0.1.exe",
+    "enabled": false,
+    "status": "under_review",
+    "notice": "Download temporariamente suspenso após alerta do Windows Defender. Arquivo em análise."
   }
 }
