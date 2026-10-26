@@ -1,18 +1,18 @@
 {
   "schema": 1,
-  "version": "0.9.4-alpha",
+  "version": "0.9.5-alpha",
   "distributionRevision": 1,
   "minecraft": "1.20.1",
   "forge": "47.3.22",
   "serverAuth": "hybrid",
   "whitelist": false,
-  "releasedAt": "2026-10-25T22:23:28.891Z",
-  "title": "Saque raro. Combate tático.",
-  "summary": "Equipamentos raros e usados, desgaste com quebra real, manutenção e soldados com distância de combate.",
+  "releasedAt": "2026-10-26T14:29:36.553Z",
+  "title": "Sua equipe. Uma incursão.",
+  "summary": "Aliados na bússola e mapa, inserção conjunta com rotas de extração e bancada TACZ completa com arma na mão.",
   "pack": {
-    "url": "https://github.com/VagJr/project-craft-launcher/releases/download/pack-0.9.4-alpha/ProjectCraft-Client-0.9.4-alpha.mrpack",
-    "sha256": "d81a287b1d8756ca75666a0ea639156bd369bf3b5e22474c13f373df2dfeaca4",
-    "size": 100635081
+    "url": "https://github.com/VagJr/project-craft-launcher/releases/download/pack-0.9.5-alpha/ProjectCraft-Client-0.9.5-alpha.mrpack",
+    "sha256": "40242e8be19f66bb7a52671d0dfc4078036a771b0bef374285c366a1d9243f4c",
+    "size": 100644220
   },
   "java": {
     "url": "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1%2B1/OpenJDK17U-jdk_x64_windows_hotspot_17.0.20.1_1.zip",
